@@ -14,7 +14,7 @@ export function FeaturedArticle({ article }: FeaturedArticleProps) {
       <div className="relative overflow-hidden">
         {/* Image */}
         {article.cover_image_url && (
-          <div className="relative aspect-[16/9] sm:aspect-[2/1]">
+          <div className="relative aspect-[16/9] sm:aspect-[5/2] lg:aspect-[3/1]">
             <Image
               src={article.cover_image_url}
               alt={article.title}
@@ -33,7 +33,7 @@ export function FeaturedArticle({ article }: FeaturedArticleProps) {
           <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/80 mb-3">
             {article.persona.rubric_name}
           </p>
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-display font-black leading-[1.1] text-white mb-3 max-w-3xl">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-display font-black leading-[1.2] text-white mb-3 max-w-2xl">
             {article.title}
           </h2>
           {article.excerpt && (
