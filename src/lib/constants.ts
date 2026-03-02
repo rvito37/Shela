@@ -8,5 +8,5 @@ export const RUBRICS = [
   { slug: "ohel-u-bayit", name: "אוכל ובית", nameEn: "Food", persona: "אביגיל בן-שמעון" },
 ] as const;
 
-export const SITE_NAME = "שלה";
+export const SITE_NAME = "שֶׁלָּהּ";
 export const SITE_TAGLINE = "מגזין לנשים ישראליות";
