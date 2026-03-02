@@ -1,36 +1,35 @@
--- Seed: 7 AI Personas (Columnists)
+-- Seed: 7 AI Personas (Columnists) — Ashkenazi + Sephardi name mix
 INSERT INTO personas (name, name_en, slug, bio, rubric_name, rubric_slug, ai_model) VALUES
 
-('נועה', 'Noa', 'noa',
+('נועה גולדשטיין', 'Noa Goldstein', 'noa',
  'נועה היא הקול החד והישיר שלנו. היא לא מפחדת לומר את מה שכולן חושבות אבל מעטות מעזות להגיד. עם הומור חד, מבט פמיניסטי ושפה שלא מתנצלת — נועה כותבת על תרבות, חברה ומה שקורה מסביב.',
  'תרבות וחברה', 'tarbut-ve-hevra', 'claude-sonnet-4-6'),
 
-('תמר', 'Tamar', 'tamar',
+('תמר אזולאי', 'Tamar Azoulay', 'tamar',
  'תמר היא החברה הכי טובה שתהיה לך — זו שמקשיבה בלי לשפוט, נותנת עצות מהלב ותמיד יודעת להגיד את המילה הנכונה. היא כותבת על זוגיות, דייטים, רגשות וכל מה שקורה בין אנשים.',
  'זוגיות וחיים', 'zugiyut-ve-hayim', 'claude-sonnet-4-6'),
 
-('יעל', 'Yael', 'yael',
+('יעל פרידמן', 'Yael Friedman', 'yael',
  'יעל היא אמא שלא מתביישת לספר את האמת — גם כשהיא מבולגנת, מצחיקה או מביכה. עם הומור עצמי, כנות מרגשת ותחושת הזדהות מיידית, היא כותבת על אמהות, משפחה וכל מה שלא מספרים בקורס הכנה ללידה.',
  'אמהות ומשפחה', 'imahut-u-mishpaha', 'claude-sonnet-4-6'),
 
-('שירה', 'Shira', 'shira',
+('שירה מזרחי', 'Shira Mizrahi', 'shira',
  'שירה מגשרת בין העולם הרוחני לחיי היומיום. היא מביאה את החכמה היהודית בצורה נגישה, חמה ורלוונטית — בלי להטיף, בלי לשפוט. שבת, חגים, מדיטציה יהודית, וחיבור לשורשים.',
  'יהדות ורוחניות', 'yahadut-ve-ruhaniyut', 'claude-sonnet-4-6'),
 
-('דנה', 'Dana', 'dana',
+('דנה כהן', 'Dana Cohen', 'dana',
  'דנה חיה ונושמת טרנדים. מאופנה וביוטי ועד סטייל חיים — היא תמיד יודעת מה חם, מה עובד ומה שווה את הכסף. הסגנון שלה אנרגטי, בטוח, ומלא השראה שאפשר ליישם מיד.',
  'יופי ואופנה', 'yofi-ve-ofna', 'claude-sonnet-4-6'),
 
-('מיכל', 'Michal', 'michal',
+('מיכל לוינסון', 'Michal Levinson', 'michal',
  'מיכל היא הקול שאומר לך "את יכולה ואת שווה". בלי מים, בלי בלוף — רק עצות אמיתיות על קריירה, משכורת, יזמות ואיך להצליח בעולם שעדיין לא תמיד שוויוני. ישירה, מעצימה, עם רגליים על הקרקע.',
  'קריירה וכסף', 'kariera-ve-kesef', 'claude-sonnet-4-6'),
 
-('אביגיל', 'Avigail', 'avigail',
+('אביגיל בן-שמעון', 'Avigail Ben-Shimon', 'avigail',
  'אביגיל היא משוררת של טעמים. כל מתכון שלה הוא סיפור, כל ארוחה היא חוויה. עם חום, נוסטלגיה ונגיעה מודרנית — היא כותבת על אוכל ישראלי, מטבח ים-תיכוני, שולחן שבת וכל מה שמחבר אותנו דרך הבטן.',
  'אוכל ובית', 'ohel-u-bayit', 'claude-sonnet-4-6');
 
--- Seed: Sample articles (2-3 per persona)
--- We use NOW() minus varying intervals so articles appear at different dates
+-- Seed: Sample articles (2 per persona)
 
 -- Noa — Culture
 INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, status, published_at, word_count, reading_time_minutes, cover_image_url) VALUES
@@ -54,7 +53,7 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 
 בפעם הבאה שמישהו ישפוט אותך על ״הישרדות״ — תזכירי לו שאריסטו כתב על דרמה כבר לפני 2,400 שנה. פשוט אז לא היו לו מצלמות נסתרות.',
  'article', 'published', NOW() - INTERVAL '2 days', 850, 4,
- 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=800'),
+ 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=900&h=600&fit=crop'),
 
 ((SELECT id FROM personas WHERE slug = 'noa'),
  '10 דברים שרק ישראליות מבינות',
@@ -73,7 +72,7 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 9. **״את חייבת לטעום את זה״** — לא שאלה, הנחיה
 10. **פותחת שיחה עם כל אחד בתור** — כי ישראליות לא מכירות זרים',
  'list', 'published', NOW() - INTERVAL '5 days', 600, 3,
- 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800');
+ 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=900&h=600&fit=crop');
 
 -- Tamar — Relationships
 INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, status, published_at, word_count, reading_time_minutes, cover_image_url) VALUES
@@ -101,7 +100,7 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 
 אהבה אמיתית מרגישה כמו נשימה עמוקה. לא כמו התקף חרדה.',
  'article', 'published', NOW() - INTERVAL '1 day', 920, 4,
- 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800'),
+ 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=900&h=600&fit=crop'),
 
 ((SELECT id FROM personas WHERE slug = 'tamar'),
  'מכתב לאישה שנשארה יותר מדי זמן',
@@ -125,7 +124,7 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 
 את שווה אהבה שלא צריכים לפצח אותה כמו חידה. את שווה מישהו שגורם לך להרגיש בבית.',
  'article', 'published', NOW() - INTERVAL '4 days', 780, 4,
- 'https://images.unsplash.com/photo-1494894194458-0174142560c0?w=800');
+ 'https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=900&h=600&fit=crop');
 
 -- Yael — Motherhood
 INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, status, published_at, word_count, reading_time_minutes, cover_image_url) VALUES
@@ -147,7 +146,7 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 
 אמהות זה הדבר הכי קשה, הכי מבלבל, והכי שווה שקרה לי.',
  'article', 'published', NOW() - INTERVAL '3 days', 870, 4,
- 'https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=800'),
+ 'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=900&h=600&fit=crop'),
 
 ((SELECT id FROM personas WHERE slug = 'yael'),
  '7 סוגי אמהות בקבוצת הוואטסאפ של הגן',
@@ -163,7 +162,7 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 6. **האמא-משטרה** — ״בבקשה לא לשלוח הודעות אחרי 22:00!״
 7. **אמא ״❤️❤️❤️״** — מגיבה לכל הודעה עם אימוג׳ים. כל. הודעה.',
  'list', 'published', NOW() - INTERVAL '6 days', 550, 3,
- 'https://images.unsplash.com/photo-1531983412531-1f49a365ffed?w=800');
+ 'https://images.unsplash.com/photo-1484665754804-74b091211472?w=900&h=600&fit=crop');
 
 -- Shira — Spirituality
 INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, status, published_at, word_count, reading_time_minutes, cover_image_url) VALUES
@@ -191,7 +190,7 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 
 שבת לא חייבת להיות דתית. היא יכולה להיות פשוט — אנושית.',
  'article', 'published', NOW() - INTERVAL '2 days', 950, 5,
- 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800'),
+ 'https://images.unsplash.com/photo-1507692049790-de58290a4334?w=900&h=600&fit=crop'),
 
 ((SELECT id FROM personas WHERE slug = 'shira'),
  'פסוק אחד שישנה לך את היום',
@@ -213,7 +212,7 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 
 בין אם ״אתה עימדי״ זה אלוהים, בן זוג, חברה, או הקול הפנימי שלך — המסר הוא אחד: לא להיות לבד בחושך.',
  'column', 'published', NOW() - INTERVAL '7 days', 680, 3,
- 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800');
+ 'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=900&h=600&fit=crop');
 
 -- Dana — Beauty & Fashion
 INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, status, published_at, word_count, reading_time_minutes, cover_image_url) VALUES
@@ -238,7 +237,7 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 ### מה שאפשר לעזוב?
 **נעלי פלטפורמה** — נגמר. **ג׳ינס עם קרעים** — 2016 קוראת, היא רוצה את זה בחזרה.',
  'article', 'published', NOW() - INTERVAL '1 day', 780, 4,
- 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800'),
+ 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&h=600&fit=crop'),
 
 ((SELECT id FROM personas WHERE slug = 'dana'),
  '5 מוצרי סקינקר ששווים כל שקל',
@@ -261,7 +260,7 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 ### 5. שמן פנים — טיפת זהב
 ₪35. ישראלי, טבעי, מדהים. מוכיח שלא צריך להיות יבוא יקר כדי לעבוד.',
  'list', 'published', NOW() - INTERVAL '4 days', 620, 3,
- 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800');
+ 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=900&h=600&fit=crop');
 
 -- Michal — Career
 INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, status, published_at, word_count, reading_time_minutes, cover_image_url) VALUES
@@ -289,7 +288,7 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 
 **5. תהיי מוכנה לתשובה.** גם ״כן,״ גם ״לא עכשיו,״ וגם ״לא.״ כל תשובה היא מידע.',
  'article', 'published', NOW() - INTERVAL '3 days', 920, 5,
- 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800'),
+ 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=900&h=600&fit=crop'),
 
 ((SELECT id FROM personas WHERE slug = 'michal'),
  'טעויות כסף שכל אישה צעירה עושה',
@@ -311,7 +310,7 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 ### טעות #5: לסמוך על בן הזוג
 אני לא אומרת לא לסמוך. אני אומרת לדעת. לדעת כמה נכנס, כמה יוצא, מה קורה עם ההשקעות. זה לא חוסר אמון. זה שפיות.',
  'list', 'published', NOW() - INTERVAL '6 days', 750, 4,
- 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800');
+ 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&h=600&fit=crop');
 
 -- Avigail — Food
 INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, status, published_at, word_count, reading_time_minutes, cover_image_url) VALUES
@@ -343,7 +342,7 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 ### מה שסבתא לעולם לא תגיד
 שהיא מוסיפה קוביית קרח לבלנדר. זה מה שעושה את הטקסטורה.',
  'article', 'published', NOW() - INTERVAL '2 days', 880, 4,
- 'https://images.unsplash.com/photo-1547516508-a5c96a3fb7de?w=800'),
+ 'https://images.unsplash.com/photo-1540914124281-342587941389?w=900&h=600&fit=crop'),
 
 ((SELECT id FROM personas WHERE slug = 'avigail'),
  'שולחן שבת ב-30 דקות (באמת)',
@@ -370,4 +369,4 @@ INSERT INTO articles (persona_id, title, slug, excerpt, content, content_type, s
 ### הסוד
 השולחן עצמו חשוב יותר מהאוכל. מפה לבנה, נרות, ויין. זהו. שבת שלום.',
  'list', 'published', NOW() - INTERVAL '5 days', 650, 3,
- 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800');
+ 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=900&h=600&fit=crop');
