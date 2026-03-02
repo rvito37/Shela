@@ -19,44 +19,50 @@ export default async function AboutPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Header */}
-      <section className="mb-12 text-center">
-        <h1 className="text-4xl font-display font-black mb-4">אודות שלה</h1>
-        <p className="text-lg text-muted leading-relaxed max-w-2xl mx-auto">
-          שלה הוא מגזין דיגיטלי לנשים ישראליות. כל רובריקה מנוהלת על ידי
-          כותבת עם קול ייחודי וסגנון משלה — כמו מגזין אמיתי, עם קולומניסטיות
-          שמדברות אלייך.
+      <section className="mb-12">
+        <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary mb-4">
+          אודות
         </p>
+        <h1 className="text-4xl sm:text-5xl font-display font-black leading-[1.1] mb-6">
+          שלה
+        </h1>
+        <p className="text-lg text-muted leading-relaxed max-w-xl">
+          מגזין דיגיטלי לנשים ישראליות. כל רובריקה מנוהלת על ידי כותבת עם קול
+          ייחודי וסגנון משלה — כמו מגזין אמיתי, עם קולומניסטיות שמדברות אלייך.
+        </p>
+        <hr className="editorial-divider-thick mt-10" />
       </section>
 
       {/* Personas */}
       <section>
-        <h2 className="text-2xl font-display font-black mb-6 text-center">
+        <h2 className="text-xs font-bold tracking-[0.15em] uppercase text-foreground mb-6">
           הקולומניסטיות שלנו
         </h2>
 
         {personas.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
             {personas.map((persona) => (
               <PersonaCard key={persona.id} persona={persona} />
             ))}
           </div>
         ) : (
-          /* Placeholder when Supabase is not connected */
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-0">
             {RUBRICS.map((rubric) => (
               <div
                 key={rubric.slug}
-                className="rounded-xl border border-border bg-surface p-5"
+                className="flex items-center gap-4 py-5 border-b border-border"
               >
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-display font-black text-xl mb-3">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-display font-black text-sm">
                   {rubric.persona.charAt(0)}
                 </div>
-                <h3 className="font-bold text-lg">{rubric.persona}</h3>
-                <p className="text-sm text-primary/80 font-medium">
-                  {rubric.name}
-                </p>
+                <div>
+                  <h3 className="font-display font-black">{rubric.persona}</h3>
+                  <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-primary">
+                    {rubric.name}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
