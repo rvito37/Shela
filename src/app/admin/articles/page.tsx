@@ -8,9 +8,12 @@ interface Article {
   id: string;
   title: string;
   slug: string;
+  excerpt: string | null;
+  content: string | null;
   status: string;
   content_type: string;
   word_count: number;
+  reading_time_minutes: number;
   ai_model_used: string | null;
   created_at: string;
   published_at: string | null;
@@ -33,6 +36,7 @@ export default function ArticlesPage() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>("all");
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   useEffect(() => {
     loadArticles();
@@ -72,6 +76,7 @@ export default function ArticlesPage() {
     });
 
     if (res.ok) {
+      setExpandedId(null);
       loadArticles();
     }
   }
@@ -124,75 +129,163 @@ export default function ArticlesPage() {
               label: article.status,
               color: "bg-gray-100",
             };
+            const isExpanded = expandedId === article.id;
 
             return (
               <div
                 key={article.id}
-                className="rounded-xl border border-border bg-surface p-4"
+                className="rounded-xl border border-border bg-surface overflow-hidden"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span
-                        className={cn(
-                          "text-xs px-2 py-0.5 rounded-full font-medium",
-                          status.color
-                        )}
-                      >
-                        {status.label}
-                      </span>
-                      <span className="text-xs text-muted">
-                        {article.content_type}
-                      </span>
-                      {article.ai_model_used && (
-                        <span className="text-xs text-muted">
-                          · {article.ai_model_used}
+                {/* Header row — clickable */}
+                <button
+                  onClick={() =>
+                    setExpandedId(isExpanded ? null : article.id)
+                  }
+                  className="w-full p-4 text-start hover:bg-accent/10 transition-colors"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span
+                          className={cn(
+                            "text-xs px-2 py-0.5 rounded-full font-medium",
+                            status.color
+                          )}
+                        >
+                          {status.label}
                         </span>
-                      )}
+                        <span className="text-xs text-muted">
+                          {article.content_type}
+                        </span>
+                        {article.ai_model_used && (
+                          <span className="text-xs text-muted">
+                            · {article.ai_model_used}
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="font-bold text-sm">
+                        {article.title}
+                      </h3>
+                      <p className="text-xs text-muted mt-1">
+                        {article.persona?.name} ·{" "}
+                        {article.persona?.rubric_name} ·{" "}
+                        {article.word_count} מילים ·{" "}
+                        {formatDate(article.created_at)}
+                      </p>
                     </div>
-                    <h3 className="font-bold text-sm truncate">
-                      {article.title}
-                    </h3>
-                    <p className="text-xs text-muted mt-1">
-                      {article.persona?.name} · {article.persona?.rubric_name}{" "}
-                      · {article.word_count} מילים ·{" "}
-                      {formatDate(article.created_at)}
-                    </p>
+                    <span className="text-muted text-lg shrink-0">
+                      {isExpanded ? "▲" : "▼"}
+                    </span>
                   </div>
+                </button>
 
-                  {/* Actions */}
-                  <div className="flex items-center gap-1 shrink-0">
-                    {article.status === "draft" && (
-                      <button
-                        onClick={() => updateStatus(article.id, "published")}
-                        className="px-3 py-1.5 text-xs rounded-lg bg-secondary text-white hover:bg-secondary-dark transition-colors"
-                      >
-                        פרסם
-                      </button>
+                {/* Expanded content */}
+                {isExpanded && (
+                  <div className="border-t border-border">
+                    {/* Excerpt */}
+                    {article.excerpt && (
+                      <div className="px-4 pt-4 pb-2">
+                        <p className="text-sm text-muted italic">
+                          {article.excerpt}
+                        </p>
+                      </div>
                     )}
-                    {article.status === "published" && (
-                      <button
-                        onClick={() => updateStatus(article.id, "archived")}
-                        className="px-3 py-1.5 text-xs rounded-lg border border-border hover:bg-accent/20 transition-colors"
-                      >
-                        ארכיון
-                      </button>
+
+                    {/* Full content */}
+                    {article.content && (
+                      <div className="px-4 py-3">
+                        <div className="bg-background rounded-lg p-4 max-h-[500px] overflow-y-auto">
+                          <ArticleContent content={article.content} />
+                        </div>
+                      </div>
                     )}
-                    <button
-                      onClick={() =>
-                        deleteArticle(article.id, article.title)
-                      }
-                      className="px-3 py-1.5 text-xs rounded-lg border border-red-200 text-red-600 hover:bg-red-50 transition-colors"
-                    >
-                      מחק
-                    </button>
+
+                    {/* Actions bar */}
+                    <div className="px-4 py-3 border-t border-border flex items-center gap-2 flex-wrap">
+                      {article.status === "draft" && (
+                        <button
+                          onClick={() =>
+                            updateStatus(article.id, "published")
+                          }
+                          className="px-4 py-2 text-sm rounded-lg bg-secondary text-white hover:bg-secondary-dark transition-colors"
+                        >
+                          פרסם עכשיו
+                        </button>
+                      )}
+                      {article.status === "published" && (
+                        <>
+                          <a
+                            href={`/${article.persona?.rubric_slug}/${article.slug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-4 py-2 text-sm rounded-lg border border-border hover:bg-accent/20 transition-colors"
+                          >
+                            צפה באתר ↗
+                          </a>
+                          <button
+                            onClick={() =>
+                              updateStatus(article.id, "archived")
+                            }
+                            className="px-4 py-2 text-sm rounded-lg border border-border hover:bg-accent/20 transition-colors"
+                          >
+                            העבר לארכיון
+                          </button>
+                        </>
+                      )}
+                      {article.status === "archived" && (
+                        <button
+                          onClick={() =>
+                            updateStatus(article.id, "published")
+                          }
+                          className="px-4 py-2 text-sm rounded-lg border border-border hover:bg-accent/20 transition-colors"
+                        >
+                          פרסם מחדש
+                        </button>
+                      )}
+                      <button
+                        onClick={() =>
+                          deleteArticle(article.id, article.title)
+                        }
+                        className="px-4 py-2 text-sm rounded-lg border border-red-200 text-red-600 hover:bg-red-50 transition-colors"
+                      >
+                        מחק
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             );
           })}
         </div>
       )}
     </div>
+  );
+}
+
+function ArticleContent({ content }: { content: string }) {
+  const html = content
+    .replace(
+      /^### (.+)$/gm,
+      '<h3 class="text-lg font-bold mt-5 mb-2">$1</h3>'
+    )
+    .replace(
+      /^## (.+)$/gm,
+      '<h2 class="text-xl font-display font-bold mt-6 mb-3">$1</h2>'
+    )
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.+?)\*/g, "<em>$1</em>")
+    .replace(/^- (.+)$/gm, '<li class="ms-4 list-disc">$1</li>')
+    .replace(
+      /^(\d+)\. (.+)$/gm,
+      '<li class="ms-4 list-decimal"><strong>$1.</strong> $2</li>'
+    )
+    .replace(/\n\n/g, '</p><p class="mb-3">')
+    .replace(/^(?!<[hlu])(.+)$/gm, "$1");
+
+  return (
+    <div
+      className="text-sm leading-relaxed text-foreground/85 [&>p]:mb-3 [&>h2]:text-foreground [&>h3]:text-foreground"
+      dangerouslySetInnerHTML={{ __html: `<p class="mb-3">${html}</p>` }}
+    />
   );
 }
